@@ -5,11 +5,9 @@
     </div>
     <el-menu
       class="el-menu-vertical-demo"
-      @open="handleOpen"
-      @close="handleClose"
       background-color="#353b4e"
       text-color="#adafb5"
-      active-text-color="#ffd04b"
+      active-text-color="#409eff"
      >
       <el-menu-item index="1">
         <i class="el-icon-s-home"></i>
@@ -51,9 +49,15 @@ export default {}
 .layout-aside {
   background: #323745;
   height: 100vh;
+
   .title{
     text-align: center;
     background: #2e2f32;
+    padding: 15px 0;
+
+    img{
+      height: 30px;
+    }
 
   }
   .el-menu{
