@@ -52,21 +52,20 @@ export default {
       search: '',
       num: '',
       userInfo: {},
-      defaultImg: require('../../assets/img/avatar.jpg')
+      defaultImg: require('../../assets/img/avatar.jpg') // 图片地址转成base64
     }
   },
   methods: {
     getUserInfo () {
-      let token = window.localStorage.getItem('user-token')
       this.$axios({
-        url: '/user/profile',
-        headers: { 'Authorization': `Bearer ${token}` }
+        url: '/user/profile'
       })
         .then(res => {
-          console.log(res)
           this.userInfo = res.data.data
         })
     },
+
+    // 公共点击事件
     commonClick (command) {
       switch (command) {
         case 'account':

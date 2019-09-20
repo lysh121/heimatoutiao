@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './permission'
 import ElementUI from 'element-ui'
-import axios from 'axios'
+import axios from './utils/axios.config'
 import Component from './components'
 
 import 'element-ui/lib/theme-chalk/index.css'
