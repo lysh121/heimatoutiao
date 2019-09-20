@@ -25,18 +25,19 @@
             </el-tooltip>
 
             <!-- 用户信息显示 -->
-            <el-dropdown trigger="click">
+            <el-dropdown trigger="click" @command="commonClick">
               <div class="el-dropdown-link">
                 <!-- 用户头像 -->
-                <img src="../../assets/img/avatar.jpg" class="user-img" />
-                13911111111
+                <img :src='userInfo.userImg' class="user-img" />
+                {{userInfo.userName}}
                 <i class="el-icon-caret-bottom"></i>
               </div>
               <!-- 用户信息下拉菜单 -->
+              <!-- command方法 -->
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>个人信息</el-dropdown-item>
-                <el-dropdown-item>Git地址</el-dropdown-item>
-                <el-dropdown-item divided>退出</el-dropdown-item>
+                <el-dropdown-item command="account">个人信息</el-dropdown-item>
+                <el-dropdown-item command="git">Git地址</el-dropdown-item>
+                <el-dropdown-item divided command="lgout">退出</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </el-col>
@@ -50,8 +51,42 @@ export default {
     return {
       search: '',
       num: '',
-      userImg: ''
+      userInfo: {
+        userName: '',
+        userImg: ''
+      },
+      defaultImg: require('../../assets/img/avatar.jpg')
     }
+  },
+  methods: {
+    getUserInfo () {
+      let token = window.localStorage.getItem('user-token')
+      this.$axios({
+        url: '/user/profile',
+        headers: { 'Authorization': `Bearer ${token}` }
+      })
+        .then(res => {
+          this.userInfo.userName = res.data.data.name
+          this.userInfo.userImg = res.data.data.photo
+        })
+    },
+    commonClick (command) {
+      switch (command) {
+        case 'account':
+          this.$message(command)
+          break
+        case 'git':
+          window.location.href = 'https://github.com/lysh121/heimatoutiao'
+          break
+        case 'lgout':
+          window.localStorage.clear() // 清空缓存 清除所有的缓存  只能清除自己当前项目的缓存
+          this.$router.push('/login')
+          break
+      }
+    }
+  },
+  created () {
+    this.getUserInfo()
   }
 }
 </script>
