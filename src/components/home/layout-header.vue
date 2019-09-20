@@ -52,11 +52,12 @@ export default {
       search: '',
       num: '',
       userInfo: {},
-      defaultImg: require('../../assets/img/avatar.jpg')
+      defaultImg: require('../../assets/img/avatar.jpg') // 图片地址转成base64
     }
   },
   methods: {
     getUserInfo () {
+      // 获取用户token令牌
       let token = window.localStorage.getItem('user-token')
       this.$axios({
         url: '/user/profile',
@@ -67,6 +68,8 @@ export default {
           this.userInfo = res.data.data
         })
     },
+
+    // 公共点击事件
     commonClick (command) {
       switch (command) {
         case 'account':
