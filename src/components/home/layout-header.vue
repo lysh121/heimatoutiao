@@ -73,7 +73,7 @@ export default {
     commonClick (command) {
       switch (command) {
         case 'account':
-          this.$message(command)
+          this.$router.push('/home/account')
           break
         case 'git':
           window.location.href = 'https://github.com/lysh121/heimatoutiao'
