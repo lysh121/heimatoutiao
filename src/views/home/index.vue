@@ -7,8 +7,10 @@
     </el-aside>
     <!-- 右侧容器 -->
     <el-container>
-      <el-header>头部</el-header>
-      <el-main>
+      <el-header height="50px">
+        <layout-header></layout-header>
+      </el-header>
+      <el-main class="bg">
         <!-- 二级路由容器 -->
         <router-view></router-view>
       </el-main>
@@ -17,12 +19,17 @@
 </template>
 
 <script>
-import Aside from '../../components/home/layout-aside.vue'
+import layoutAside from '../../components/home/layout-aside.vue'
+import layoutHeader from '../../components/home/layout-header.vue'
+
 export default {
   components: {
-    'layout-aside': Aside
+    'layout-aside': layoutAside,
+    'layout-header': layoutHeader
   }
 }
 </script>
+
 <style>
+
 </style>
