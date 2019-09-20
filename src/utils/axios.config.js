@@ -1,4 +1,6 @@
 import axios from 'axios'
+import router from '../permission'
+import { Message } from 'element-ui'
 
 // 请求拦截
 axios.interceptors.request.use(function (config) {
@@ -15,7 +17,34 @@ axios.interceptors.response.use(function (response) {
   return response.data ? response.data : {}
 }, function (error) {
   // 对请求失败做处理
-  return Promise.reject(error)
+  let status = error.response.status
+  let message = '未知错误'
+  switch (status) {
+    case 400:
+      message = '请求参数错误'
+      break
+    case 403:
+      message = 'refresh_token未携带或已过期'
+      break
+    case 507:
+      message = '服务器或数据库异常'
+      break
+    case 401:
+      message = 'token未传或已过期'
+      window.localStorage.clear()
+      router.push('/login')
+      break
+    case 404:
+      message = '手机号不正确'
+      window.localStorage.clear()
+      router.push('/login')
+      break
+    default:
+      break
+  }
+  Message({ message, type: 'warning' })
+
+  return new Promise(function () {}) // 终止当前的错误
 })
 
 export default axios

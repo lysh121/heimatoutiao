@@ -9,7 +9,4 @@ export default {}
 </script>
 
 <style lang="less" scoped>
-  .main{
-    background: #f2f3f5;
-  }
 </style>
