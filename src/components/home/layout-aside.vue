@@ -15,7 +15,7 @@
         <i class="el-icon-s-home"></i>
         <span slot="title">首页</span>
       </el-menu-item>
-      <el-submenu>
+      <el-submenu index="1">
         <template slot="title">
           <i class="el-icon-document"></i>
           <span>内容管理</span>
@@ -25,7 +25,7 @@
           <el-menu-item index="/home/comment">评论列表</el-menu-item>
           <el-menu-item index="/home/material">素材管理</el-menu-item>
       </el-submenu>
-      <el-submenu index="3">
+      <el-submenu index="2">
         <template slot="title">
           <i class="el-icon-s-custom"></i>
           <span>粉丝管理</span>
@@ -49,8 +49,6 @@ export default {}
 
 <style lang="less" scoped>
 .layout-aside {
-  background: #323745;
-  height: 100vh;
 
   .title{
     text-align: center;

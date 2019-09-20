@@ -28,8 +28,8 @@
             <el-dropdown trigger="click" @command="commonClick">
               <div class="el-dropdown-link">
                 <!-- 用户头像 -->
-                <img :src='userInfo.userImg' class="user-img" />
-                {{userInfo.userName}}
+                <img :src='userInfo.photo?userInfo.photo:defaultImg' class="user-img" />
+                {{userInfo.name}}
                 <i class="el-icon-caret-bottom"></i>
               </div>
               <!-- 用户信息下拉菜单 -->
@@ -51,10 +51,7 @@ export default {
     return {
       search: '',
       num: '',
-      userInfo: {
-        userName: '',
-        userImg: ''
-      },
+      userInfo: {},
       defaultImg: require('../../assets/img/avatar.jpg')
     }
   },
@@ -66,8 +63,8 @@ export default {
         headers: { 'Authorization': `Bearer ${token}` }
       })
         .then(res => {
-          this.userInfo.userName = res.data.data.name
-          this.userInfo.userImg = res.data.data.photo
+          console.log(res)
+          this.userInfo = res.data.data
         })
     },
     commonClick (command) {
@@ -93,6 +90,8 @@ export default {
 
 <style lang="less" scoped>
 .header{
+  background: #fff;
+  padding: 20px;
   color: #333;
   height: 50px;
   line-height:50px;
