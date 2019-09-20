@@ -1,5 +1,5 @@
 <template>
-  <el-row class="header" type="flex" justify="space-between" align="middle">
+  <el-row class="header" type="flex">
           <!-- 左侧部分 -->
           <el-col :span="12">
             <i class="el-icon-s-fold"></i>
@@ -89,11 +89,9 @@ export default {
 
 <style lang="less" scoped>
 .header{
-  background: #fff;
-  padding: 20px;
-  color: #333;
+  align-items: center;
   height: 50px;
-  line-height:50px;
+  color: #333;
 
 .el-icon-s-fold{
   font-size: 24px;

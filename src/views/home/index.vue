@@ -7,10 +7,10 @@
     </el-aside>
     <!-- 右侧容器 -->
     <el-container style="background: #f2f3f5;">
-      <el-header height="50px" style="padding: 0;">
+      <el-header style="height: 50px;background: #fff;">
         <layout-header></layout-header>
       </el-header>
-      <el-main style="padding: 10px;">
+      <el-main>
         <!-- 二级路由容器 -->
         <router-view></router-view>
       </el-main>
