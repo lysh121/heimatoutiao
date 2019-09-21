@@ -36,6 +36,16 @@
                    </template>
                  </el-table-column>
            </el-table>
+           <el-row type="flex" justify="center" style="margin-top: 20px;">
+             <el-pagination
+               background
+               layout="prev, pager, next"
+               :total="page.total"
+               :page-size="page.pageSize"
+               :current-page="page.currentPage"
+               @current-change="changePage">
+             </el-pagination>
+           </el-row>
     </el-card>
   </div>
 </template>
@@ -44,10 +54,19 @@
 export default {
   data () {
     return {
-      tableData: []
+      tableData: [],
+      page: {
+        total: 0,
+        currentPage: 1,
+        pageSize: 10
+      }
     }
   },
   methods: {
+    changePage (newPage) {
+      this.page.currentPage = newPage
+      this.getComment()
+    },
     closeOrOpen (row) {
       let mess = row.comment_status ? '关闭' : '打开'
       this.$confirm(`确定要${mess}评论吗？`)
@@ -68,11 +87,14 @@ export default {
         url: '/articles',
         // 路径参数 Query参数
         params: {
-          response_type: 'comment'
+          response_type: 'comment',
+          page: this.page.currentPage,
+          per_page: this.page.pageSize
         }
       })
         .then(res => {
           this.tableData = res.data.results
+          this.page.total = res.data.total_count
         })
     },
     stateFormatter (row, colunm, cellValue, index) {
