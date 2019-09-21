@@ -14,6 +14,7 @@
              </el-table-column>
              <el-table-column
                prop="comment_status"
+               :formatter="stateFormatter"
                align="center"
                label="评论状态">
              </el-table-column>
@@ -60,8 +61,11 @@ export default {
       })
         .then(res => {
           this.tableData = res.data.results
-          // console.log(res);
         })
+    },
+    stateFormatter (row, colunm, cellValue, index) {
+      debugger
+      return cellValue ? '正常' : '关闭'
     }
   },
   created () {
