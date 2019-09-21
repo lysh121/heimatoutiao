@@ -1,4 +1,4 @@
-<template>
+
   <el-row class="header" type="flex">
           <!-- 左侧部分 -->
           <el-col :span="12">
