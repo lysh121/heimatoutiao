@@ -32,7 +32,7 @@
         </template>
           <el-menu-item index="/home/gradata">图文数据</el-menu-item>
           <el-menu-item index="/home/fanpro">粉丝概况</el-menu-item>
-          <el-menu-item index="fanpic">粉丝画像</el-menu-item>
+          <el-menu-item index="/home/fanpic">粉丝画像</el-menu-item>
           <el-menu-item index="/home/fanlist">粉丝列表</el-menu-item>
       </el-submenu>
       <el-menu-item index="/home/account">
