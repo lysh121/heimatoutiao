@@ -5,6 +5,7 @@
         <template slot='title'>评论列表</template>
         </bread-crumb>
         <el-table
+            v-loading="loading"
              :data="tableData"
              style="width: 100%;border:1px solid #EBEEF5;">
              <el-table-column
@@ -59,7 +60,8 @@ export default {
         total: 0,
         currentPage: 1,
         pageSize: 10
-      }
+      },
+      loading: false
     }
   },
   methods: {
@@ -83,6 +85,7 @@ export default {
         })
     },
     getComment () {
+      this.loading = true
       this.$axios({
         url: '/articles',
         // 路径参数 Query参数
@@ -95,6 +98,7 @@ export default {
         .then(res => {
           this.tableData = res.data.results
           this.page.total = res.data.total_count
+          this.loading = false
         })
     },
     stateFormatter (row, colunm, cellValue, index) {
