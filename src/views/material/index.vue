@@ -1,12 +1,14 @@
 <template>
-  <el-card>
+  <el-card style="position: relative;">
     <!-- 面包屑组件 -->
     <bread-crumb slot="header">
       <template slot="title">
         素材管理
       </template>
     </bread-crumb>
-
+    <el-upload class="btn-upload" action="" :http-request="uploadImg">
+      <el-button type="primary">上传图片</el-button>
+    </el-upload>
     <!-- 标签页 -->
     <el-tabs v-model="activeName" @tab-click="chanegTab">
       <!-- 全部素材列表 -->
@@ -69,7 +71,6 @@ export default {
   data () {
     return {
       activeName: 'all',
-      src: '',
       list: [],
       page: {
         total: 0,
@@ -80,6 +81,18 @@ export default {
     }
   },
   methods: {
+    uploadImg (params) {
+      const data = new FormData()
+      data.append('image', params.file)
+      this.$axios({
+        url: '/user/images',
+        method: 'POST',
+        data
+      })
+        .then(() => {
+          this.getMaterial()
+        })
+    },
     changePage (newPage) {
       this.page.currentPage = newPage
       this.getMaterial()
@@ -111,7 +124,12 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
+.btn-upload{
+    position: absolute;
+    margin-top: -10px;
+    right: 40px;
+    z-index: 1;
+  }
 .img-list {
   display: flex;
   flex-wrap: wrap;
