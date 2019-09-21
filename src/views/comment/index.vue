@@ -32,7 +32,7 @@
                    label="操作">
                    <template slot-scope="scope">
                      <el-button type="text" size="small">修改</el-button>
-                     <el-button @click="closeOrOpen(scope.row)" type="text" size="small">{{scope.row.comment_status?'关闭评论':'打开评论'}}</el-button>
+                     <el-button :style="{color:scope.row.comment_status?'#E6A23C':'#409EFF'}" @click="closeOrOpen(scope.row)" type="text" size="small">{{scope.row.comment_status?'关闭评论':'打开评论'}}</el-button>
                    </template>
                  </el-table-column>
            </el-table>
@@ -55,7 +55,7 @@ export default {
           this.$axios({
             url: '/comments/status',
             method: 'PUT',
-            params: { article_id: row.id },
+            params: { article_id: row.id.toString() },
             data: { allow_comment: !row.comment_status }
           })
             .then(() => {

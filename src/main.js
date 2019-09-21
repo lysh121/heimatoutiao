@@ -12,7 +12,6 @@ Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(Component)
 
-axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0'
 Vue.prototype.$axios = axios
 
 new Vue({

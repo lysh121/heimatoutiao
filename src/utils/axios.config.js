@@ -1,7 +1,13 @@
 import axios from 'axios'
 import router from '../permission'
+import jsonBig from 'json-bigint'
 import { Message } from 'element-ui'
 
+axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0'
+
+axios.defaults.transformResponse = [function (data) {
+  return jsonBig.parse(data) // 变换转换方式，使得计算更精确，保证大数字不失真
+}]
 // 请求拦截
 axios.interceptors.request.use(function (config) {
   // 统一注入token
