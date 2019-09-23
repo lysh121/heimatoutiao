@@ -6,7 +6,7 @@
         素材管理
       </template>
     </bread-crumb>
-    <el-upload class="btn-upload" action="" :http-request="uploadImg">
+    <el-upload class="btn-upload" :show-file-list="false" action="" :http-request="uploadImg">
       <el-button type="primary">上传图片</el-button>
     </el-upload>
     <!-- 标签页 -->
@@ -20,8 +20,8 @@
                 <div slot="error" class="image-slot"><i class="el-icon-picture-outline"></i></div>
               </el-image>
               <div class="bottom">
-                <i class="el-icon-star-on" :style='{ color:item.is_collected?"#d81e06":"inherit"}'></i>
-                <i class="el-icon-delete-solid"></i>
+                <i class="el-icon-star-on" @click="collectOrCancel(item)" :style='{ color:item.is_collected?"#d81e06":"inherit"}'></i>
+                <i class="el-icon-delete-solid" @click="delImg(item.id)"></i>
               </div>
             </div>
           </el-card>
@@ -41,7 +41,7 @@
 
       <!-- 收藏素材列表 -->
       <el-tab-pane label="收藏素材" name="collect">
-        <div class="img-list">
+        <div class="img-list" v-loading="loading">
           <el-card v-for="(item, index) in list" :key="index" style="margin: 10px;">
             <div class="img-item">
               <el-image fit="cover" :src="item.url" class="image">
@@ -81,6 +81,34 @@ export default {
     }
   },
   methods: {
+    collectOrCancel (item) {
+      let mess = item.is_collected ? '取消' : ''
+      this.$confirm(`确定要${mess}收藏图片？`)
+        .then(() => {
+        // console.log(imgId)
+          this.$axios({
+            url: '/user/images/' + item.id,
+            method: 'PUT',
+            data: { collect: !item.is_collected }
+          })
+            .then(() => {
+              this.getMaterial()
+            })
+        })
+    },
+    delImg (imgId) {
+      this.$confirm('确定要删除该图片吗？')
+        .then(() => {
+        // console.log(imgId)
+          this.$axios({
+            url: '/user/images/' + imgId,
+            method: 'DELETE'
+          })
+            .then(() => {
+              this.getMaterial()
+            })
+        })
+    },
     uploadImg (params) {
       const data = new FormData()
       data.append('image', params.file)
