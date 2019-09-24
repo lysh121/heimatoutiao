@@ -22,7 +22,7 @@
         </el-radio-group>
       </el-form-item>
       <!-- 封面组件 -->
-      <cover-image :images="formData.cover.images"></cover-image>
+      <cover-image @selectImg="changeImg" :images="formData.cover.images"></cover-image>
       <el-form-item label="频道" prop="channel_id">
         <el-select v-model="formData.channel_id" clearable>
           <el-option
@@ -86,6 +86,22 @@ export default {
           break
       }
     },
+
+    changeImg (url, index) {
+      // 正常写法
+      // this.formData.cover.images = this.formData.cover.images.map(function (item, i) {
+      //   if (index === i) {
+      //     return url
+      //   }
+      //   return item
+      // })
+
+      // this.formData.cover.images.splice(index, 1, url)     //直接替换，只适用于字符串
+
+      // 简写形式
+      this.formData.cover.images = this.formData.cover.images.map((item, i) => index === i ? url : item)
+    },
+
     publish (draft) {
       this.$refs.publishForm.validate((isOk) => {
         if (isOk) {

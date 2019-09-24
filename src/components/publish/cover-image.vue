@@ -4,16 +4,16 @@
     <div class="image-row">
        <div class="image-list" v-for="(item,index) in images" :key="index">
          <span>点击选择图片</span>
-          <img  @click="dialogVisible = true" :src="item?item:defaultImg" alt="">
+          <img  @click="openLayer(index)" :src="item?item:defaultImg" alt="">
         </div>
     </div>
+    <!-- 弹层组件 -->
     <el-dialog
-      title="提示"
       :visible="dialogVisible"
-      width="30%"
+      width="50%"
       @close="dialogVisible = false"
       >
-      <select-image></select-image>
+      <select-image @selectOneImg="receiveImg"></select-image>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
@@ -28,7 +28,22 @@ export default {
   data () {
     return {
       defaultImg: require('../../assets/img/pic_bg.png'),
-      dialogVisible: false
+      dialogVisible: false,
+      selectIndex: -1
+    }
+  },
+  methods: {
+
+    // 接收子组件传过来的参数，并将数据向上继续传递一层
+    receiveImg (url) {
+      this.$emit('selectImg', url, this.selectIndex)
+      this.dialogVisible = false
+    },
+
+    // 打开层
+    openLayer (index) {
+      this.dialogVisible = true
+      this.selectIndex = index
     }
   }
 }

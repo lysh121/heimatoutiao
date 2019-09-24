@@ -109,6 +109,8 @@ export default {
             })
         })
     },
+
+    // 上传图片
     uploadImg (params) {
       const data = new FormData()
       data.append('image', params.file)
