@@ -2,6 +2,8 @@
 import layoutAside from './home/layout-aside'
 import layoutHeader from './home/layout-header'
 import breadCrumb from './common/bread-crumb'
+import coverImg from './publish/cover-image'
+import selectImg from './publish/select-image'
 
 // 富文本编辑器
 import 'quill/dist/quill.core.css'
@@ -17,5 +19,8 @@ export default {
     Vue.component('bread-crumb', breadCrumb) // 注册面包屑组件
 
     Vue.component('quill-editor', quillEditor) // 富文本编辑器组件
+
+    Vue.component('cover-image', coverImg)
+    Vue.component('select-image', selectImg)
   }
 }

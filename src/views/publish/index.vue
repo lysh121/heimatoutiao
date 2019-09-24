@@ -21,6 +21,8 @@
           <el-radio :label="-1">自动</el-radio>
         </el-radio-group>
       </el-form-item>
+      <!-- 封面组件 -->
+      <cover-image :images="formData.cover.images"></cover-image>
       <el-form-item label="频道" prop="channel_id">
         <el-select v-model="formData.channel_id" clearable>
           <el-option
@@ -88,6 +90,7 @@ export default {
       this.$refs.publishForm.validate((isOk) => {
         if (isOk) {
           let { articleId } = this.$route.params
+          debugger
           this.$axios({
             url: articleId ? `/articles/${articleId}` : '/articles',
             method: articleId ? 'PUT' : 'POST',
