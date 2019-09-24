@@ -38,7 +38,7 @@
             <dd class="date">{{ item.pubdate }}</dd>
           </dl>
           <div class="right">
-            <span>
+            <span @click="goEdit(item.id)">
               <i class="el-icon-edit"></i>
               修改
             </span>
@@ -84,6 +84,11 @@ export default {
     }
   },
   methods: {
+    // 修改文章
+    goEdit (id) {
+      this.$router.push(`publish/${id.toString()}`)
+    },
+
     // 删除文章
     delArticles (id) {
       this.$confirm('确定要删除该文章吗？')

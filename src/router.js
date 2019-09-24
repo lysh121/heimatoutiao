@@ -39,6 +39,11 @@ export default new Router({
           component: () => import('./views/articles')
         },
         {
+          // 修改文章
+          path: 'publish/:articlesId',
+          component: () => import('./views/publish')
+        },
+        {
           path: 'publish',
           component: () => import('./views/publish')
         }
