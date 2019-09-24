@@ -13,8 +13,8 @@
       <el-form-item  style="height: 400px;"  label="内容" prop="content">
         <quill-editor  style="height: 320px"  v-model="formData.content"></quill-editor>
         </el-form-item>
-      <el-form-item label="封面">
-        <el-radio-group v-model="formData.cover.type">
+      <el-form-item label="封面" prop="cover">
+        <el-radio-group @change="changeType" v-model="formData.cover.type">
           <el-radio :label="1">单图</el-radio>
           <el-radio :label="3">三图</el-radio>
           <el-radio :label="0">无图</el-radio>
@@ -70,6 +70,20 @@ export default {
     }
   },
   methods: {
+    // 类型改变事件
+    changeType () {
+      switch (this.formData.cover.type) {
+        case 1:
+          this.formData.cover.images = ['']
+          break
+        case 3:
+          this.formData.cover.images = ['', '', '']
+          break
+        default:
+          this.formData.cover.images = []
+          break
+      }
+    },
     publish (draft) {
       this.$refs.publishForm.validate((isOk) => {
         if (isOk) {
@@ -86,6 +100,8 @@ export default {
         }
       })
     },
+
+    // 获取频道数据
     getChannels () {
       this.$axios({
         url: '/channels'
