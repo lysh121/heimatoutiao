@@ -46,6 +46,10 @@ export default new Router({
         {
           path: 'publish',
           component: () => import('./views/publish')
+        },
+        {
+          path: 'account',
+          component: () => import('./views/account')
         }
       ]
     }
