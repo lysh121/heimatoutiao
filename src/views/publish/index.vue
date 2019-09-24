@@ -10,8 +10,8 @@
         <el-input placeholder="文章名称" v-model="formData.title">
         </el-input>
         </el-form-item>
-      <el-form-item label="内容" prop="content">
-        <el-input type="textarea" v-model="formData.content"></el-input>
+      <el-form-item  style="height: 400px;"  label="内容" prop="content">
+        <quill-editor  style="height: 320px"  v-model="formData.content"></quill-editor>
         </el-form-item>
       <el-form-item label="封面">
         <el-radio-group v-model="formData.cover.type">
@@ -107,7 +107,6 @@ export default {
   created () {
     this.getChannels()
     let { articleId } = this.$route.params
-    // console.log(articleId)
     articleId && this.getArticleById(articleId)
     this.name = articleId ? '修改文章' : '发表文章'
   }
