@@ -23,7 +23,9 @@
         <el-button type="primary" @click="saveUser">保存信息</el-button>
       </el-form-item>
     </el-form>
-    <img class="user-img" :src="formData.photo" alt="">
+    <el-upload action="" :show-file-list="false" :http-request="updateImg">
+      <img class="user-img" :src="formData.photo" alt="">
+    </el-upload>
   </el-card>
 </template>
 
@@ -52,6 +54,22 @@ export default {
       })
         .then(res => {
           this.formData = res.data
+        })
+    },
+
+    // 修改用户头像
+    updateImg (params) {
+      let data = new FormData()
+      data.append('photo', params.file)
+      this.$axios({
+        url: '/user/photo',
+        method: 'PATCH',
+        data
+      })
+        .then(res => {
+          this.formData.photo = res.data.photo
+          this.$message({ message: '修改成功', type: 'success' })
+          eventBus.$emit('updateUserInfo')
         })
     },
 
