@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import eventBus from '../../utils/eventBus'
 export default {
   data () {
     return {
@@ -65,6 +66,7 @@ export default {
           })
             .then(() => {
               this.$message({ message: '保存成功', type: 'success' })
+              eventBus.$emit('updateUserInfo')
             })
         }
       })
