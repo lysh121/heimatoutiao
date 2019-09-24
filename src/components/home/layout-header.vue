@@ -111,6 +111,7 @@ export default {
       .user-img{
         border-radius: 50%;
         width: 36px;
+        height: 36px;
       }
 
       .msg {
