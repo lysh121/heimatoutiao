@@ -40,7 +40,7 @@ export default new Router({
         },
         {
           // 修改文章
-          path: 'publish/:articlesId',
+          path: 'publish/:articleId',
           component: () => import('./views/publish')
         },
         {

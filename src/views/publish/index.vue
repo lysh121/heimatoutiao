@@ -2,7 +2,7 @@
   <el-card>
     <bread-crumb slot="header">
       <template slot="title">
-        发表文章
+        {{name}}
       </template>
     </bread-crumb>
     <el-form label-width="80px" :rules="publishrules" :model="formData" ref="publishForm" >
@@ -44,6 +44,7 @@
 export default {
   data () {
     return {
+      name: '发表文章',
       channels: [],
       formData: {
         title: '',
@@ -72,14 +73,15 @@ export default {
     publish (draft) {
       this.$refs.publishForm.validate((isOk) => {
         if (isOk) {
+          let { articleId } = this.$route.params
           this.$axios({
-            url: '/articles',
-            method: 'POST',
+            url: articleId ? `/articles/${articleId}` : '/articles',
+            method: articleId ? 'PUT' : 'POST',
             params: { draft }, // draft为true时是草稿
             data: this.formData
           })
             .then(() => {
-              this.$router.push('/articles')
+              this.$router.push('/home/articles')
             })
         }
       })
@@ -91,10 +93,23 @@ export default {
         .then(res => {
           this.channels = res.data.channels
         })
+    },
+    // 根据文章id获取文章详情
+    getArticleById (articleId) {
+      this.$axios({
+        url: `/articles/${articleId}`
+      })
+        .then(res => {
+          this.formData = res.data
+        })
     }
   },
   created () {
     this.getChannels()
+    let { articleId } = this.$route.params
+    // console.log(articleId)
+    articleId && this.getArticleById(articleId)
+    this.name = articleId ? '修改文章' : '发表文章'
   }
 }
 </script>
