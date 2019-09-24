@@ -5,22 +5,22 @@
         账户信息
       </template>
     </bread-crumb>
-    <el-form v-model="formData" label-position="right" label-width="120px">
-      <el-form-item label="用户名">
+    <el-form ref="accountForm" :model="formData" :rules="accountRules" label-position="right" label-width="120px">
+      <el-form-item label="用户名" prop="name">
         <el-input v-model="formData.name" style="width: 300px;"></el-input>
       </el-form-item>
       <el-form-item label="头条号简介">
         <el-input v-model="formData.intro" style="width: 300px;"></el-input>
       </el-form-item>
-      <el-form-item label="用户邮箱">
-        <el-input type="e-mail" v-model="formData.email" style="width: 300px;"></el-input>
+      <el-form-item label="用户邮箱" prop="email">
+        <el-input v-model="formData.email" style="width: 300px;"></el-input>
       </el-form-item>
       <el-form-item label="手机号">
         <el-input type="mobile" v-model="formData.mobile" disabled style="width: 300px;"></el-input>
       </el-form-item>
       <el-divider></el-divider>
       <el-form-item>
-        <el-button type="primary">修改</el-button>
+        <el-button type="primary" @click="saveUser">保存信息</el-button>
       </el-form-item>
     </el-form>
     <img class="user-img" :src="formData.photo" alt="">
@@ -31,8 +31,15 @@
 export default {
   data () {
     return {
-      formData: {
-
+      formData: {},
+      accountRules: {
+        name: [
+          { required: true, message: '用户名不能为空' },
+          { min: 1, max: 7, message: '用户名长度为1-7个字符' }
+        ],
+        email: [
+          { required: true, message: '邮箱不能为空' }
+        ]
       }
     }
   },
@@ -45,6 +52,22 @@ export default {
         .then(res => {
           this.formData = res.data
         })
+    },
+
+    // 修改用户信息
+    saveUser () {
+      this.$refs.accountForm.validate((isOk) => {
+        if (isOk) {
+          this.$axios({
+            url: '/user/profile',
+            method: 'PATCH',
+            data: this.formData
+          })
+            .then(() => {
+              this.$message({ message: '保存成功', type: 'success' })
+            })
+        }
+      })
     }
   },
   created () {
