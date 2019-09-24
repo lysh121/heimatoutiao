@@ -139,7 +139,6 @@ export default {
       })
         .then(res => {
           this.channels = res.data.channels
-          this.formData.channels_id = res.data.channels.id
         })
     }
   },
