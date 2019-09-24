@@ -18,7 +18,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="频道列表：">
-          <el-select v-model="formData.channels_id" placeholder="请选择" @change="changeComdition">
+          <el-select v-model="formData.channels_id" clearable placeholder="请选择" @change="changeComdition">
             <el-option v-for="item in channels" :value="item.id" :label="item.name" :key="item.id"></el-option>
         </el-select>
         </el-form-item>
@@ -84,7 +84,6 @@ export default {
     }
   },
   methods: {
-
     // 删除文章
     delArticles (id) {
       this.$confirm('确定要删除该文章吗？')
@@ -105,8 +104,11 @@ export default {
     // 状态变化事件
     changeComdition () {
       this.page.currentPage = 1
+      this.formData.channels_id = this.formData.channels_id ? this.formData.channels_id : null
       this.queryArticles()
     },
+
+    // 封装
     queryArticles () {
       let params = {
         status: this.formData.status === 5 ? null : this.formData.status,
@@ -136,7 +138,6 @@ export default {
         url: '/channels'
       })
         .then(res => {
-          console.log(res.data)
           this.channels = res.data.channels
           this.formData.channels_id = res.data.channels.id
         })
