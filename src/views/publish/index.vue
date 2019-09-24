@@ -106,7 +106,6 @@ export default {
       this.$refs.publishForm.validate((isOk) => {
         if (isOk) {
           let { articleId } = this.$route.params
-          debugger
           this.$axios({
             url: articleId ? `/articles/${articleId}` : '/articles',
             method: articleId ? 'PUT' : 'POST',
